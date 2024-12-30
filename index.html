@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Gasto de Energia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de Gasto de Energia</h1>
+
+    <label for="eletrodomestico">Eletrodoméstico:</label>
+    <select id="eletrodomestico">
+        <option value="60">Lâmpada (60W)</option>
+        <option value="1000">Micro-ondas (1000W)</option>
+        <option value="1500">Ar-condicionado (1500W)</option>
+        <option value="200">Geladeira (200W)</option>
+        <option value="3000">Secador de cabelo (3000W)</option>
+    </select>
+
+    <label for="horas">Horas de uso por dia:</label>
+    <input type="number" id="horas" min="0" placeholder="Digite as horas" required>
+
+    <button onclick="calcularGasto()">Calcular Gasto Mensal</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        const precoPorKWh = 0.570; // Preço do kWh em R$
+
+        function calcularGasto() {
+            const potencia = parseInt(document.getElementById("eletrodomestico").value); // Potência em Watts
+            const horasPorDia = parseFloat(document.getElementById("horas").value); // Horas de uso por dia
+
+            if (horasPorDia < 0) {
+                alert("Por favor, insira um número válido de horas.");
+                return;
+            }
+
+            const consumoDiario = (potencia / 1000) * horasPorDia; // Consumo diário em kWh
+            const consumoMensal = consumoDiario * 30; // Consumo mensal em kWh
+            const custoMensal = consumoMensal * precoPorKWh; // Custo mensal em R$
+
+            document.getElementById("resultado").innerText = `Custo mensal: R$ ${custoMensal.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
